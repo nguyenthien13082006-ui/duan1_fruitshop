@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 120" role="img" aria-label="Fruit Shop logo">
+  <rect width="300" height="120" rx="24" fill="#fff7ed"/>
+  <circle cx="78" cy="60" r="34" fill="#f59e0b"/>
+  <path d="M78 28c10 0 20 8 20 20 0 14-20 30-20 30S58 62 58 48c0-12 10-20 20-20z" fill="#ec4899"/>
+  <path d="M112 42c0-13 10-24 24-24 12 0 22 8 24 20-4-2-8-3-13-3-12 0-22 8-24 20-2-3-5-6-7-8-2-2-4-3-4-5z" fill="#22c55e"/>
+  <path d="M170 44h16c16 0 28 12 28 28 0 16-12 28-28 28h-16V44z" fill="#16a34a"/>
+  <path d="M186 44c17 0 30 13 30 30 0 15-11 27-27 29l-3-6c11-2 19-12 19-23 0-10-7-19-17-22l-2-8z" fill="#f97316"/>
+  <text x="92" y="90" font-family="Segoe UI, Arial, sans-serif" font-size="30" font-weight="700" fill="#1f2937">Fruit Shop</text>
+</svg>
