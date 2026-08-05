@@ -151,8 +151,11 @@ class HomeController
     public function addGioHang()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_SESSION['user_client']))
-                $user = $_SESSION['user_client'];            //Lấy dữ liệu giỏ hàng của người dùng 
+            if (!isset($_SESSION['user_client'])) {
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+            $user = $_SESSION['user_client'];            //Lấy dữ liệu giỏ hàng của người dùng 
             $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
 
             if (!$gioHang) {
@@ -276,6 +279,10 @@ class HomeController
     public function postThanhToan()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_SESSION['user_client'])) {
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
             $ten_nguoi_nhan = $_POST['ten_nguoi_nhan'];
             $email_nguoi_nhan = $_POST['email_nguoi_nhan'];
             $sdt_nguoi_nhan = $_POST['sdt_nguoi_nhan'];
@@ -330,7 +337,7 @@ class HomeController
 
 
 
-                // **Không xóa giỏ hàng** - giữ nguyên để tham khảo
+                // Xóa giỏ hàng sau khi đặt hàng thành công (sản phẩm đã được lưu vào chi_tiet_don_hangs ở trên)
                 $this->modelGioHang->clearDetailGioHang($gioHang['id']);
                 $this->modelGioHang->clearGioHang($tai_khoan_id);
 
@@ -461,6 +468,114 @@ class HomeController
         require_once './views/lienHe.php';
     }
 
+    private function getNewsArticles()
+    {
+        return [
+            [
+                'title' => 'Mùa cam ngọt mới đã về - Bí quyết chọn cam tươi ngon',
+                'slug' => 'mua-cam-ngot-moi-da-ve',
+                'image' => 'uploads/cam-vang.jpg',
+                'date' => '2026-07-20',
+                'excerpt' => 'Mùa cam năm nay đến sớm với trái căng mọng, vị ngọt đậm. Hướng dẫn chọn và bảo quản cam để giữ trọn vị.',
+                'content' => 'Cam vàng mùa vụ mới có vỏ mỏng, mùi thơm dịu và vị ngọt thanh. Khi chọn mua, bạn nên chọn quả có vỏ căng, không có vết thâm lớn. Bảo quản ở nơi thoáng mát hoặc tủ lạnh để giữ độ tươi.'
+            ],
+            [
+                'title' => 'Dâu tây hữu cơ: từ nông trại đến bàn ăn',
+                'slug' => 'dau-tay-huu-co-tu-nong-trai',
+                'image' => 'uploads/dau-tay.jpg',
+                'date' => '2026-06-15',
+                'excerpt' => 'Dâu tây hữu cơ giữ được hương vị tự nhiên, giàu vitamin C. Cách phân biệt dâu tây thật và giả.',
+                'content' => 'Dâu tây hữu cơ được trồng theo phương pháp không dùng thuốc bảo vệ thực vật, giữ lại hương vị tự nhiên. Chọn quả chín đỏ đều, cầm chắc tay và có hương thơm đặc trưng.'
+            ],
+            [
+                'title' => 'Kiwi xanh – công dụng và cách dùng trong món tráng miệng',
+                'slug' => 'kiwi-xanh-cong-dung-va-cach-dung',
+                'image' => 'uploads/kiwi-xanh.png',
+                'date' => '2026-05-30',
+                'excerpt' => 'Kiwi giàu vitamin, thích hợp cho chế biến salad và smoothie. Gợi ý công thức đơn giản.',
+                'content' => 'Kiwi xanh có hương vị pha chua ngọt, giàu vitamin C và chất xơ. Xắt lát trộn cùng dâu tây và sữa chua, hoặc xay cùng chuối để làm smoothie bổ dưỡng.'
+            ],
+            [
+                'title' => 'Cherry nhập khẩu: cách chọn quả ngọt mọng',
+                'slug' => 'cherry-nhap-khau-cach-chon',
+                'image' => 'uploads/cherry-my.jpg',
+                'date' => '2026-07-05',
+                'excerpt' => 'Cherry tươi nhập khẩu màu đỏ rực, vị ngọt thanh. Hướng dẫn chọn cherry ngon và bảo quản đúng cách.',
+                'content' => 'Cherry nhập khẩu nên chọn quả cứng vừa, vỏ không bị nứt, cuống còn xanh. Nên bảo quản ở ngăn mát tủ lạnh và dùng trong 2-3 ngày để giữ độ tươi.'
+            ],
+            [
+                'title' => 'Cam ruột đỏ Cara Cara: đặc sản ngọt mát',
+                'slug' => 'cam-cara-cara-dac-san-ngot-mat',
+                'image' => 'uploads/cam-cara-cara.jpg',
+                'date' => '2026-07-12',
+                'excerpt' => 'Cam Cara Cara ruột đỏ thơm ngon, giàu vitamin C. Công thức nước ép giải nhiệt hè đơn giản.',
+                'content' => 'Cam Cara Cara có ruột đỏ đặc trưng và vị ngọt dịu. Nên chọn quả nặng tay, không có vết thâm, rửa sạch và để lạnh trước khi ép để giữ nguyên hương vị.'
+            ],
+            [
+                'title' => 'Hồng giòn New Zealand: cách nhận biết hàng thật',
+                'slug' => 'hong-gion-new-zealand-cach-nhan-biet',
+                'image' => 'uploads/hong-gion-new-zealand.jpg',
+                'date' => '2026-06-28',
+                'excerpt' => 'Hồng giòn New Zealand thơm ngon và giòn rụm. Mẹo nhận biết hàng nhập khẩu chuẩn và cách bảo quản sau khi mua.',
+                'content' => 'Hồng giòn thật có vỏ mịn, màu vàng nhạt và mùi thơm nhẹ. Nên để trong ngăn mát tủ lạnh và ăn ngay khi còn giòn, không nên để quá lâu kẻo mất độ ngon.'
+            ],
+            [
+                'title' => 'Dưa lê Hàn Quốc: bí quyết chọn quả vàng ngọt',
+                'slug' => 'dua-le-han-quoc-bi-quyet-chon-qua',
+                'image' => 'uploads/dua-le-han-quoc.jpg',
+                'date' => '2026-07-02',
+                'excerpt' => 'Dưa lê Hàn Quốc ruột vàng giòn, vị ngọt thanh. Cách chọn dưa ngon và lưu ý bảo quản tại nhà.',
+                'content' => 'Dưa lê Hàn Quốc ngon cần có vỏ vàng sáng và ruột giòn. Tránh mua quả có vết nứt hoặc mùi lạ, bảo quản trong ngăn mát và dùng trong 3-4 ngày.'
+            ],
+            [
+                'title' => 'Lê Evergood Hàn Quốc: ăn ngon, xua tan mệt mỏi',
+                'slug' => 'le-evergood-han-quoc-an-ngon',
+                'image' => 'uploads/le-han-quoc-evergood.jpg',
+                'date' => '2026-06-20',
+                'excerpt' => 'Lê Evergood Hàn Quốc vỏ mềm, ruột mọng nước. Hướng dẫn chọn quả và cất giữ để giữ trọn độ giòn.',
+                'content' => 'Lê Evergood thích hợp ăn trực tiếp hoặc làm salad. Nên chọn quả đầy đặn, vỏ không bị thâm và giữ trong ngăn mát tủ lạnh để tránh bị mềm.'
+            ],
+        ];
+    }
+
+    public function news()
+    {
+        $allArticles = $this->getNewsArticles();
+        $perPage = 3;
+        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+        $totalArticles = count($allArticles);
+        $totalPages = max(1, (int)ceil($totalArticles / $perPage));
+        if ($page > $totalPages) {
+            $page = $totalPages;
+        }
+
+        $offset = ($page - 1) * $perPage;
+        $articles = array_slice($allArticles, $offset, $perPage);
+
+        require_once './views/news.php';
+    }
+
+    public function newsDetail()
+    {
+        $slug = $_GET['slug'] ?? '';
+        $articles = $this->getNewsArticles();
+        $article = null;
+
+        foreach ($articles as $item) {
+            if ($item['slug'] === $slug) {
+                $article = $item;
+                break;
+            }
+        }
+
+        if (!$article) {
+            header("Location: " . BASE_URL . '?act=tin-tuc');
+            exit();
+        }
+
+        require_once './views/news-detail.php';
+    }
+
     public function dashboard()
     {
         if (!isset($_SESSION['user_client'])) {
@@ -559,6 +674,32 @@ class HomeController
         header("Location: " . BASE_URL . '?act=thong-tin-ca-nhan');
     }
 
+
+    public function postDanhGia()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (!isset($_SESSION['user_client'])) {
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            }
+
+            $san_pham_id = (int)($_POST['san_pham_id'] ?? 0);
+            $so_sao = (int)($_POST['so_sao'] ?? 0);
+            $noi_dung = trim($_POST['noi_dung'] ?? '');
+
+            if ($san_pham_id <= 0 || $so_sao < 1 || $so_sao > 5) {
+                $_SESSION['error'] = ['Vui lòng chọn số sao từ 1 đến 5'];
+                header("Location: " . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
+                exit();
+            }
+
+            $tai_khoan_id = $_SESSION['user_client']['id'];
+            $this->modelSanPham->addDanhGia($san_pham_id, $tai_khoan_id, $so_sao, $noi_dung);
+
+            header("Location: " . BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $san_pham_id);
+            exit();
+        }
+    }
 
     public function postBinhLuan()
     {

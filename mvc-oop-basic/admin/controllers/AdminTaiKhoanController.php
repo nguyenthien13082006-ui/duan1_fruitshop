@@ -40,6 +40,8 @@ class AdminTaiKhoanController
 
             if (empty($email)) {
                 $errors['email'] = 'Email không được để trống';
+            } elseif ($this->modelTaiKhoan->getTaiKhoanformEmail($email)) {
+                $errors['email'] = 'Email này đã được sử dụng, vui lòng chọn email khác';
             }
 
             $_SESSION['error'] = $errors;

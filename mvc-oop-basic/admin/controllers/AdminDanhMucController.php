@@ -98,8 +98,13 @@ class AdminDanhMucController
         $id = $_GET['id_danh_muc'];
         $danhMuc = $this->modelDanhMuc->getDetailDanhMuc($id);
         if ($danhMuc) {
-            //Nếu tồn tại thì tiến hành xóa danh mục
-            $this->modelDanhMuc->destroyDanhMuc($id);
+            $soLuongSanPham = $this->modelDanhMuc->countSanPhamTheoDanhMuc($id);
+            if ($soLuongSanPham > 0) {
+                $_SESSION['error_message'] = 'Không thể xóa danh mục này vì vẫn còn ' . $soLuongSanPham . ' sản phẩm thuộc danh mục. Vui lòng chuyển sản phẩm sang danh mục khác trước khi xóa.';
+            } else {
+                //Nếu tồn tại và không còn sản phẩm thì tiến hành xóa danh mục
+                $this->modelDanhMuc->destroyDanhMuc($id);
+            }
             header('location: ' . BASE_URL_ADMIN . '?act=danh-muc');
             exit();
         } else {

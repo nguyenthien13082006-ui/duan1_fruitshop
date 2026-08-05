@@ -99,3 +99,24 @@ function formatPrice($price)
 {
     return number_format($price, 0, ',', '.');
 }
+
+function renderStarRating($rating, $max = 5)
+{
+    $rating = max(0, min((float)$rating, (float)$max));
+    $fullStars = (int)floor($rating);
+    $hasHalfStar = ($rating - $fullStars) >= 0.5;
+    $emptyStars = $max - $fullStars - ($hasHalfStar ? 1 : 0);
+
+    $html = '';
+    for ($i = 0; $i < $fullStars; $i++) {
+        $html .= '<i class="fa fa-star text-warning"></i>';
+    }
+    if ($hasHalfStar) {
+        $html .= '<i class="fa fa-star-half-o text-warning"></i>';
+    }
+    for ($i = 0; $i < $emptyStars; $i++) {
+        $html .= '<i class="fa fa-star-o text-muted"></i>';
+    }
+
+    return $html;
+}

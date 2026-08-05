@@ -93,4 +93,21 @@ class AdminDanhMuc
             echo "Lỗi: " . $e->getMessage();
         }
     }
+
+    // Đếm số sản phẩm đang thuộc danh mục này (dùng để chặn xóa theo business rule)
+    public function countSanPhamTheoDanhMuc($id)
+    {
+        try {
+            $sql = 'SELECT COUNT(*) as tong FROM san_phams WHERE danh_muc_id = :id';
+
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->execute([':id' => $id]);
+
+            $result = $stmt->fetch();
+            return (int)($result['tong'] ?? 0);
+        } catch (Exception $e) {
+            echo "Lỗi: " . $e->getMessage();
+        }
+    }
 }

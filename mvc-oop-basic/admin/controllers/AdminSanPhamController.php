@@ -5,10 +5,12 @@ class AdminSanPhamController
 {
     public $modelSanPham;
     public $modelDanhMuc;
+    public $modelNhaCungCap;
     public function __construct()
     {
         $this->modelSanPham = new AdminSanPham();
         $this->modelDanhMuc = new AdminDanhMuc();
+        $this->modelNhaCungCap = new AdminNhaCungCap();
     }
     public function danhSachSanPham()
     {
@@ -20,6 +22,7 @@ class AdminSanPhamController
     public function formAddSanPham()
     {
         $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        $listNhaCungCap = $this->modelNhaCungCap->getAllNhaCungCap();
         require_once './views/sanpham/addSanPham.php';
 
 
@@ -39,6 +42,9 @@ class AdminSanPhamController
             $so_luong = $_POST['so_luong'] ?? '';
             $ngay_nhap = $_POST['ngay_nhap'] ?? '';
             $danh_muc_id = $_POST['danh_muc_id'] ?? '';
+            $nha_cung_cap_id = $_POST['nha_cung_cap_id'] ?? null;
+            $xuat_xu = $_POST['xuat_xu'] ?? '';
+            $don_vi_tinh = $_POST['don_vi_tinh'] ?? 'kg';
             $trang_thai = $_POST['trang_thai'] ?? '';
             $mo_ta = $_POST['mo_ta'] ?? '';
 
@@ -57,12 +63,18 @@ class AdminSanPhamController
             }
             if (empty($gia_san_pham)) {
                 $errors['gia_san_pham'] = 'Giá sản phẩm không được để trống';
+            } elseif ((int)$gia_san_pham <= 0) {
+                $errors['gia_san_pham'] = 'Giá sản phẩm phải lớn hơn 0';
             }
             if (empty($gia_khuyen_mai)) {
                 $errors['gia_khuyen_mai'] = 'Giá khuyến mãi sản phẩm không được để trống';
+            } elseif (!empty($gia_san_pham) && (int)$gia_khuyen_mai > (int)$gia_san_pham) {
+                $errors['gia_khuyen_mai'] = 'Giá khuyến mãi không được lớn hơn giá bán';
             }
             if (empty($so_luong)) {
                 $errors['so_luong'] = 'Số lượng sản phẩm không được để trống';
+            } elseif ((int)$so_luong < 0) {
+                $errors['so_luong'] = 'Số lượng tồn kho không được âm';
             }
             if (empty($ngay_nhap)) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống';
@@ -89,6 +101,9 @@ class AdminSanPhamController
                     $so_luong,
                     $ngay_nhap,
                     $danh_muc_id,
+                    $nha_cung_cap_id,
+                    $xuat_xu,
+                    $don_vi_tinh,
                     $trang_thai,
                     $mo_ta,
                     $file_thumb
@@ -132,6 +147,7 @@ class AdminSanPhamController
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
         $listDanhMuc = $this->modelDanhMuc->getAllDanhMuc();
+        $listNhaCungCap = $this->modelNhaCungCap->getAllNhaCungCap();
         if ($sanPham) {
             //Nếu tồn tại thì trả về form sửa sản phẩm
             require_once './views/sanpham/editSanPham.php';
@@ -162,6 +178,9 @@ class AdminSanPhamController
             $so_luong = $_POST['so_luong'] ?? '';
             $ngay_nhap = $_POST['ngay_nhap'] ?? '';
             $danh_muc_id = $_POST['danh_muc_id'] ?? '';
+            $nha_cung_cap_id = $_POST['nha_cung_cap_id'] ?? null;
+            $xuat_xu = $_POST['xuat_xu'] ?? '';
+            $don_vi_tinh = $_POST['don_vi_tinh'] ?? 'kg';
             $trang_thai = $_POST['trang_thai'] ?? '';
             $mo_ta = $_POST['mo_ta'] ?? '';
 
@@ -176,12 +195,18 @@ class AdminSanPhamController
             }
             if (empty($gia_san_pham)) {
                 $errors['gia_san_pham'] = 'Giá sản phẩm không được để trống';
+            } elseif ((int)$gia_san_pham <= 0) {
+                $errors['gia_san_pham'] = 'Giá sản phẩm phải lớn hơn 0';
             }
             if (empty($gia_khuyen_mai)) {
                 $errors['gia_khuyen_mai'] = 'Giá khuyến mãi sản phẩm không được để trống';
+            } elseif (!empty($gia_san_pham) && (int)$gia_khuyen_mai > (int)$gia_san_pham) {
+                $errors['gia_khuyen_mai'] = 'Giá khuyến mãi không được lớn hơn giá bán';
             }
             if (empty($so_luong)) {
                 $errors['so_luong'] = 'Số lượng sản phẩm không được để trống';
+            } elseif ((int)$so_luong < 0) {
+                $errors['so_luong'] = 'Số lượng tồn kho không được âm';
             }
             if (empty($ngay_nhap)) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống';
@@ -219,6 +244,9 @@ class AdminSanPhamController
                     $so_luong,
                     $ngay_nhap,
                     $danh_muc_id,
+                    $nha_cung_cap_id,
+                    $xuat_xu,
+                    $don_vi_tinh,
                     $trang_thai,
                     $mo_ta,
                     $new_file
@@ -367,5 +395,22 @@ class AdminSanPhamController
                 }
             }
         }
+    }
+
+    // Cập nhật nhanh số lượng tồn kho ngay từ danh sách sản phẩm
+    public function postUpdateSoLuong()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST['san_pham_id'] ?? null;
+            $so_luong = $_POST['so_luong'] ?? null;
+
+            if ($id !== null && $so_luong !== null && (int)$so_luong >= 0) {
+                $this->modelSanPham->updateSoLuong($id, (int)$so_luong);
+            } else {
+                $_SESSION['error_message'] = 'Số lượng tồn kho không hợp lệ (phải là số nguyên không âm).';
+            }
+        }
+        header('location: ' . BASE_URL_ADMIN . '?act=san-pham');
+        exit();
     }
 }

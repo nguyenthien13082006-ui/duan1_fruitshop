@@ -176,8 +176,14 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                                                         <span class="price-regular"><?= formatPrice($sanPham['gia_khuyen_mai']) . 'đ'; ?></span>
                                                         <span class="price-old"><del><?= formatPrice($sanPham['gia_san_pham']) . 'đ'; ?></del></span>
                                                     <?php } else { ?>
-                                                        <span class="price-regular"><?= formatPrice($sanPham['gia_khuyen_mai']) . 'đ'; ?></span>
+                                                        <span class="price-regular"><?= formatPrice($sanPham['gia_san_pham']) . 'đ'; ?></span>
                                                     <?php } ?>
+                                                </div>
+                                                <div class="ratings d-flex justify-content-center align-items-center mt-2" style="font-size: 13px;">
+                                                    <div class="me-1">
+                                                        <?= renderStarRating($sanPham['avg_rating'] ?? 0) ?>
+                                                    </div>
+                                                    <span class="text-muted">(<?= number_format((float)($sanPham['avg_rating'] ?? 0), 1) ?>/5)</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -285,6 +291,12 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                                             <span class="price-regular"><?= formatPrice($sanPham['gia_san_pham']) ?>đ</span>
                                         <?php } ?>
                                     </div>
+                                    <div class="ratings d-flex justify-content-center align-items-center mt-2" style="font-size: 13px;">
+                                        <div class="me-1">
+                                            <?= renderStarRating($sanPham['avg_rating'] ?? 0) ?>
+                                        </div>
+                                        <span class="text-muted">(<?= number_format((float)($sanPham['avg_rating'] ?? 0), 1) ?>/5)</span>
+                                    </div>
 
                                 </div>
                             </div>
@@ -353,6 +365,12 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                                                     <?php } else { ?>
                                                         <span class="price-regular"><?= formatPrice($sanPham['gia_san_pham']) ?>đ</span>
                                                     <?php } ?>
+                                                </div>
+                                                <div class="ratings d-flex justify-content-center align-items-center mt-2" style="font-size: 13px;">
+                                                    <div class="me-1">
+                                                        <?= renderStarRating($sanPham['avg_rating'] ?? 0) ?>
+                                                    </div>
+                                                    <span class="text-muted">(<?= number_format((float)($sanPham['avg_rating'] ?? 0), 1) ?>/5)</span>
                                                 </div>
 
                                             </div>
@@ -445,16 +463,16 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                         <!-- blog post item start -->
                         <div class="blog-post-item">
                             <figure class="blog-thumb">
-                                <a href="blog-details.html">
+                                <a href="<?= BASE_URL . '?act=tin-tuc' ?>">
                                     <img src="assets/tin1.png" alt="blog image">
                                 </a>
                             </figure>
                             <div class="blog-content">
                                 <div class="blog-meta">
-                                    <p>26/03/2026 | <a href="#">Levano</a></p>
+                                    <p>26/03/2026 | <a href="#">Fruit Shop</a></p>
                                 </div>
                                 <h5 class="blog-title">
-                                    <a href="blog-details.html">Giày Cole Haan có tốt không? Những lý do khiến phái mạnh mê mẩn</a>
+                                    <a href="blog-details.html">Bí quyết chọn hoa quả nhập khẩu tươi ngon, an toàn</a>
                                 </h5>
                             </div>
                         </div>
@@ -463,16 +481,16 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                         <!-- blog post item start -->
                         <div class="blog-post-item">
                             <figure class="blog-thumb">
-                                <a href="blog-details.html">
+                                    <a href="<?= BASE_URL . '?act=tin-tuc' ?>">
                                     <img src="assets/tin2.png" alt="blog image">
                                 </a>
                             </figure>
                             <div class="blog-content">
                                 <div class="blog-meta">
-                                    <p>26/03/2026 | <a href="#">Levano</a></p>
+                                    <p>26/03/2026 | <a href="#">Fruit Shop</a></p>
                                 </div>
                                 <h5 class="blog-title">
-                                    <a href="blog-details.html">Chơi Pickleball đi giày gì? Tiêu chí chọn giày nhất định phải biết</a>
+                                    <a href="blog-details.html">Tuần lễ trái cây tươi nhập khẩu - Ưu đãi chỉ từ 59K</a>
                                 </h5>
                             </div>
                         </div>
@@ -481,16 +499,16 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                         <!-- blog post item start -->
                         <div class="blog-post-item">
                             <figure class="blog-thumb">
-                                <a href="blog-details.html">
+                                    <a href="<?= BASE_URL . '?act=tin-tuc' ?>">
                                     <img src="assets/tin3.png" alt="blog image">
                                 </a>
                             </figure>
                             <div class="blog-content">
                                 <div class="blog-meta">
-                                    <p>26/03/2026 | <a href="#">Levano</a></p>
+                                    <p>26/03/2026 | <a href="#">Fruit Shop</a></p>
                                 </div>
                                 <h5 class="blog-title">
-                                    <a href="blog-details.html">Giày On Running của nước nào? Liệu có tốt như lời đồn</a>
+                                    <a href="blog-details.html">Đại hội trái cây - Giảm giá đến 50% các loại quả nhập khẩu</a>
                                 </h5>
                             </div>
                         </div>
@@ -499,16 +517,16 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                         <!-- blog post item start -->
                         <div class="blog-post-item">
                             <figure class="blog-thumb">
-                                <a href="blog-details.html">
+                                <a href="<?= BASE_URL . '?act=tin-tuc' ?>">
                                     <img src="assets/tin4.png" alt="blog image">
                                 </a>
                             </figure>
                             <div class="blog-content">
                                 <div class="blog-meta">
-                                    <p>26/03/2026 | <a href="#">Levano</a></p>
+                                    <p>26/03/2026 | <a href="#">Fruit Shop</a></p>
                                 </div>
                                 <h5 class="blog-title">
-                                    <a href="blog-details.html">Giày tennis Babolat có tốt không? Những điều cần biết trước khi mua</a>
+                                    <a href="blog-details.html">Nông trại tươi xanh: Rau củ quả sạch, chăm chút tận tay</a>
                                 </h5>
                             </div>
                         </div>
@@ -517,17 +535,16 @@ if (!isset($listSanPham) || !is_array($listSanPham)) {
                         <!-- blog post item start -->
                         <div class="blog-post-item">
                             <figure class="blog-thumb">
-                                <a href="blog-details.html">
+                                    <a href="<?= BASE_URL . '?act=tin-tuc' ?>">
                                     <img src="assets/tin5.png" alt="blog image">
                                 </a>
                             </figure>
                             <div class="blog-content">
                                 <div class="blog-meta">
-                                    <p>26/03/2026 | <a href="#">Levano</a></p>
+                                    <p>26/03/2026 | <a href="#">Fruit Shop</a></p>
                                 </div>
                                 <h5 class="blog-title">
-                                    <a href="blog-details.html">Bảng size giày Babolat và bí quyết chọn size theo từng dòng giày
-                                    </a>
+                                    <a href="<?= BASE_URL . '?act=tin-tuc' ?>">Ưu đãi giảm đến 29% - Miễn phí vận chuyển hoa quả tươi</a>
                                 </h5>
                             </div>
                         </div>

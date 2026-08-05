@@ -13,8 +13,8 @@
                     <div class="widget-item">
                         <div class="widget-title">
                             <div class="widget-logo">
-                                <a href="index.html">
-                                    <img src="assets/levano.jpg" width="170px" alt="brand logo">
+                                <a href="<?= BASE_URL ?>">
+                                    <img src="assets/img/fruit-logo.svg" width="170px" alt="Fruit Shop logo">
                                 </a>
                             </div>
                         </div>
@@ -30,8 +30,8 @@
                             <address class="contact-block">
                                 <ul>
                                     <li><i class="pe-7s-home"></i>13 Trịnh Văn Bô</li>
-                                    <li><i class="pe-7s-mail"></i> <a href="mailto:demo@plazathemes.com">manhnon16@gmail.com</a></li>
-                                    <li><i class="pe-7s-call"></i> <a href="tel:0966513945">0966513945</a></li>
+                                    <li><i class="pe-7s-mail"></i> <a href="mailto:demo@plazathemes.com">gullit1308@gmail.com</a></li>
+                                    <li><i class="pe-7s-call"></i> <a href="tel:0385600521">0385600521</a></li>
                                 </ul>
                             </address>
                         </div>
@@ -54,8 +54,7 @@
                     <div class="widget-item">
                         <h6 class="widget-title">Theo dõi chúng tôi</h6>
                         <div class="widget-body social-link">
-                            <a href="https://www.facebook.com/biicutiidzs1tg?mibextid=wwXIfr&rdid=yjin19cYtJlJgjG5&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CYLeqTvBm%2F%3Fmibextid%3DwwXIfr"><i class="fa fa-facebook"></i></a>
-                            <a href="https://www.instagram.com/biicutii06/profilecard/?igsh=NzJ4bHdiczJpcmo2"><i class="fa fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/nguyen.ngoc.thien.659440"><i class="fa fa-facebook"></i></a>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/levano.jpg">
+    <link rel="shortcut icon" type="image/svg+xml" href="assets/img/fruit-logo.svg">
 
     <!-- CSS
 	============================================ -->

@@ -15,6 +15,52 @@
 
   <div class="content">
     <div class="container-fluid">
+
+      <!-- THỐNG KÊ TỔNG QUAN -->
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3><?= number_format($tongSanPham) ?></h3>
+              <p>Tổng số sản phẩm</p>
+            </div>
+            <div class="icon"><i class="fas fa-apple-alt"></i></div>
+            <a href="<?= BASE_URL_ADMIN . '?act=san-pham' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3><?= number_format($tongDanhMuc) ?></h3>
+              <p>Tổng số danh mục</p>
+            </div>
+            <div class="icon"><i class="fas fa-th-large"></i></div>
+            <a href="<?= BASE_URL_ADMIN . '?act=danh-muc' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3><?= number_format($tongDonHang) ?></h3>
+              <p>Tổng số đơn hàng</p>
+            </div>
+            <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+            <a href="<?= BASE_URL_ADMIN . '?act=don-hang' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3><?= number_format(count($khachHangs)) ?></h3>
+              <p>Tổng số khách hàng</p>
+            </div>
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <a href="<?= BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang' ?>" class="small-box-footer">Xem chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+      <!-- /.THỐNG KÊ TỔNG QUAN -->
+
       <div class="row">
 
         <!-- KHÁCH TRUY CẬP -->
@@ -57,17 +103,14 @@
             </div>
           </div>
 
-          <!-- SẢN PHẨM -->
+          <!-- SẢN PHẨM SẮP HẾT HÀNG -->
           <div class="card">
             <div class="card-header border-0">
-              <h3 class="card-title">Sản phẩm</h3>
+              <h3 class="card-title">Sản phẩm sắp hết hàng</h3>
 
               <div class="card-tools">
-                <a href="#" class="btn btn-tool btn-sm">
-                  <i class="fas fa-download"></i>
-                </a>
-                <a href="#" class="btn btn-tool btn-sm">
-                  <i class="fas fa-bars"></i>
+                <a href="<?= BASE_URL_ADMIN . '?act=san-pham' ?>" class="btn btn-tool btn-sm">
+                  <i class="fas fa-external-link-alt"></i>
                 </a>
               </div>
             </div>
@@ -100,7 +143,10 @@
                       </td>
 
                       <td>
-                        <?= (int)($sanPham['so_luong'] ?? 0) ?>
+                        <?php $tonKho = (int)($sanPham['so_luong'] ?? 0); ?>
+                        <span class="badge <?= $tonKho == 0 ? 'badge-danger' : ($tonKho <= 20 ? 'badge-warning' : 'badge-success') ?>">
+                          <?= $tonKho ?>
+                        </span>
                       </td>
 
                       <td>
@@ -120,6 +166,61 @@
                     </tr>
                   <?php endif; ?>
 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        <!-- SẢN PHẨM BÁN CHẠY -->
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header border-0">
+              <h3 class="card-title">Sản phẩm bán chạy nhất</h3>
+              <div class="card-tools">
+                <a href="<?= BASE_URL_ADMIN . '?act=san-pham' ?>" class="btn btn-tool btn-sm">
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="card-body table-responsive p-0">
+              <table class="table table-striped table-valign-middle">
+                <thead>
+                  <tr>
+                    <th>Sản phẩm</th>
+                    <th>Đã bán</th>
+                    <th>Doanh thu</th>
+                    <th>Đánh giá</th>
+                    <th>Chi tiết</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (!empty($topSanPhamBanChay)) : ?>
+                    <?php foreach ($topSanPhamBanChay as $sp) : ?>
+                      <tr>
+                        <td>
+                          <img src="<?= BASE_URL . ($sp['hinh_anh'] ?? '') ?>" class="img-circle img-size-32 mr-2">
+                          <?= htmlspecialchars($sp['ten_san_pham'] ?? '') ?>
+                        </td>
+                        <td><?= number_format((int)($sp['sold_qty'] ?? 0)) ?></td>
+                        <td><?= number_format((int)($sp['revenue'] ?? 0)) ?>đ</td>
+                        <td>
+                          <span style="white-space: nowrap;"><?= renderStarRating($sp['avg_rating'] ?? 0) ?></span>
+                          <small class="text-muted">(<?= (int)($sp['so_luot_danh_gia'] ?? 0) ?>)</small>
+                        </td>
+                        <td>
+                          <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . (int)$sp['id'] ?>" class="text-muted">
+                            <i class="fas fa-search"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php else : ?>
+                    <tr>
+                      <td colspan="5" class="text-center">Chưa có dữ liệu bán hàng</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -165,6 +266,10 @@
 
               <div class="position-relative mb-4">
                 <canvas id="sales-chart" height="200"></canvas>
+              </div>
+
+              <div class="position-relative mb-4">
+                <canvas id="yearly-sales-chart" height="120"></canvas>
               </div>
 
               <div class="d-flex flex-row justify-content-end">
@@ -284,92 +389,67 @@
 
 <script src="./assets/plugins/chart.js/Chart.min.js"></script>
 
+<?php
+// Chuẩn bị dữ liệu cho biểu đồ từ controller
+$dayLabels = [];
+$dayData = [];
+if (!empty($doanhThuNgay)) {
+    foreach ($doanhThuNgay as $r) {
+        $dayLabels[] = $r['day'];
+        $dayData[] = (int)$r['revenue'];
+    }
+}
+
+$monthLabels = [];
+$monthData = [];
+if (!empty($doanhThuThang)) {
+    foreach ($doanhThuThang as $r) {
+        $monthLabels[] = $r['month'];
+        $monthData[] = (int)$r['revenue'];
+    }
+}
+
+$yearLabels = [];
+$yearData = [];
+if (!empty($doanhThuNam)) {
+    foreach ($doanhThuNam as $r) {
+        $yearLabels[] = $r['year'];
+        $yearData[] = (int)$r['revenue'];
+    }
+}
+?>
+
 <script>
-  $(function() {
+  (function() {
+    var dayLabels = <?= json_encode($dayLabels) ?>;
+    var dayData = <?= json_encode($dayData) ?>;
+    var monthLabels = <?= json_encode($monthLabels) ?>;
+    var monthData = <?= json_encode($monthData) ?>;
+    var yearLabels = <?= json_encode($yearLabels) ?>;
+    var yearData = <?= json_encode($yearData) ?>;
 
-    var visitorsCtx = document.getElementById('visitors-chart');
-    var salesCtx = document.getElementById('sales-chart');
-
-    if (visitorsCtx) {
-
-      new Chart(visitorsCtx, {
-
+    function makeLineChart(ctxId, labels, data, label, color) {
+      var ctx = document.getElementById(ctxId);
+      if (!ctx) return;
+      new Chart(ctx, {
         type: 'line',
-
         data: {
-
-          labels: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'CN'],
-
-          datasets: [
-
-            {
-              label: 'Tuần này',
-              borderColor: '#007bff',
-              data: [120, 150, 170, 140, 180, 210, 190],
-              fill: false
-            },
-
-            {
-              label: 'Tuần trước',
-              borderColor: '#ced4da',
-              data: [100, 120, 130, 110, 150, 160, 155],
-              fill: false
-            }
-
-          ]
-
+          labels: labels,
+          datasets: [{
+            label: label,
+            borderColor: color,
+            data: data,
+            fill: false
+          }]
         },
-
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        }
-
+        options: { responsive: true, maintainAspectRatio: false }
       });
-
     }
 
-
-    if (salesCtx) {
-
-      new Chart(salesCtx, {
-
-        type: 'line',
-
-        data: {
-
-          labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
-
-          datasets: [
-
-            {
-              label: 'Năm nay',
-              borderColor: '#007bff',
-              data: [12, 19, 14, 17, 22, 25],
-              fill: false
-            },
-
-            {
-              label: 'Năm trước',
-              borderColor: '#6c757d',
-              data: [10, 13, 11, 15, 18, 20],
-              fill: false
-            }
-
-          ]
-
-        },
-
-        options: {
-          responsive: true,
-          maintainAspectRatio: false
-        }
-
-      });
-
-    }
-
-  });
+    makeLineChart('visitors-chart', dayLabels, dayData, 'Doanh thu (7 ngày)', '#007bff');
+    makeLineChart('sales-chart', monthLabels, monthData, 'Doanh thu theo tháng', '#28a745');
+    makeLineChart('yearly-sales-chart', yearLabels, yearData, 'Doanh thu theo năm', '#6c757d');
+  })();
 </script>
 
 </body>

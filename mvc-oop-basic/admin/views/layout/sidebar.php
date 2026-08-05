@@ -51,6 +51,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="<?= BASE_URL_ADMIN . '?act=nha-cung-cap' ?>" class="nav-link">
+            <i class="nav-icon fas fa-truck"></i>
+            <p>
+              Nhà cung cấp
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="<?= BASE_URL_ADMIN . '?act=san-pham' ?>" class="nav-link">
             <i class="nav-icon fas fa-cat"></i>
             <p>

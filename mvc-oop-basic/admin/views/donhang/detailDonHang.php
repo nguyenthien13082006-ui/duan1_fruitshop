@@ -45,7 +45,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4>
-                                    <i class="fas fa-globe"></i> Shop giầy dép Levano.
+                                    <i class="fas fa-globe"></i> Shop hoa quả Fruit Shop.
                                     <small class="float-right">Ngày đặt:
                                         <?= formatDate($donHang['ngay_dat']); ?>
                                     </small>

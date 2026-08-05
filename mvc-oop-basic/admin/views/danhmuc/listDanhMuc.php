@@ -23,6 +23,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
+          <?php if (!empty($_SESSION['error_message'])): ?>
+            <div class="alert alert-danger">
+              <?= $_SESSION['error_message']; unset($_SESSION['error_message']); ?>
+            </div>
+          <?php endif; ?>
           <div class="card">
             <div class="card-header">
               <a href="<?= BASE_URL_ADMIN . '?act=form-them-danh-muc' ?>">

@@ -141,7 +141,7 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="./assets/index2.html" class="h1">BÁN GIÀY DÉP</a>
+                <a href="./assets/index2.html" class="h1">BÁN HOA QỦA</a>
             </div>
             <div class="card-body">
                 <?php if (!empty($_SESSION['error'])): ?>

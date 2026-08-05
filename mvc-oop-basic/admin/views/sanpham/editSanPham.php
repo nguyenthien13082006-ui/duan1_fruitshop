@@ -43,6 +43,10 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                <label for="ma_san_pham">Mã sản phẩm</label>
+                                <input type="text" id="ma_san_pham" class="form-control" value="<?= $sanPham['ma_san_pham'] ?? ('SP' . str_pad($sanPham['id'], 4, '0', STR_PAD_LEFT)) ?>" readonly disabled>
+                            </div>
+                            <div class="form-group">
                                 <label for="ten_san_pham">Tên sản phẩm</label>
                                 <input type="text" id="ten_san_pham" name="ten_san_pham" class="form-control" value="<?= $sanPham['ten_san_pham'] ?>">
                                 <?php if (isset($_SESSION['error']['ten_san_pham'])) { ?>
@@ -74,6 +78,28 @@
                                 <select id="inputStatus" name="danh_muc_id" class="form-control custom-select">
                                     <?php foreach ($listDanhMuc as $danhMuc): ?>
                                         <option <?= $danhMuc['id'] == $sanPham['danh_muc_id'] ? 'selected' : '' ?> value="<?= $danhMuc['id']; ?>"><?= $danhMuc['ten_danh_muc'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nha_cung_cap_id">Nhà cung cấp</label>
+                                <select id="nha_cung_cap_id" name="nha_cung_cap_id" class="form-control custom-select">
+                                    <option value="">-- Chọn nhà cung cấp (không bắt buộc) --</option>
+                                    <?php foreach ($listNhaCungCap as $nhaCungCap): ?>
+                                        <option <?= $nhaCungCap['id'] == $sanPham['nha_cung_cap_id'] ? 'selected' : '' ?> value="<?= $nhaCungCap['id']; ?>"><?= $nhaCungCap['ten_nha_cung_cap'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="xuat_xu">Xuất xứ</label>
+                                <input type="text" id="xuat_xu" name="xuat_xu" class="form-control" value="<?= $sanPham['xuat_xu'] ?? '' ?>" placeholder="Ví dụ: Hàn Quốc, Đà Lạt - Việt Nam,...">
+                            </div>
+                            <div class="form-group">
+                                <label for="don_vi_tinh">Đơn vị tính</label>
+                                <?php $donViHienTai = $sanPham['don_vi_tinh'] ?? 'kg'; ?>
+                                <select id="don_vi_tinh" name="don_vi_tinh" class="form-control custom-select">
+                                    <?php foreach (['kg', 'hộp', 'túi', 'quả', 'thùng'] as $dv): ?>
+                                        <option <?= $dv == $donViHienTai ? 'selected' : '' ?> value="<?= $dv ?>"><?= $dv ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>

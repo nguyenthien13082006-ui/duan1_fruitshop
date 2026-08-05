@@ -45,11 +45,14 @@ match ($act) {
 
     'products' => (new HomeController())->Products(),
     'gioi-thieu' => (new HomeController())->gioiThieu(),
+    'tin-tuc' => (new HomeController())->news(),
+    'tin-tuc-chi-tiet' => (new HomeController())->newsDetail(),
     
     'thong-tin-ca-nhan' => (new HomeController())->thongTinCaNhan(),
     'update-profile' => (new HomeController())->updateProfile(),
     'lien_he' => (new HomeController())->lienHe(),
     'dashboard' => (new HomeController())->dashboard(),
 
+    'post-danh-gia' => (new HomeController())->postDanhGia(),
     'post-binh-luan' => (new HomeController())->postBinhLuan(),
 };

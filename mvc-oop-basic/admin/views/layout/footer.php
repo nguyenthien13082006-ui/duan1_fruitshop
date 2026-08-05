@@ -2,7 +2,7 @@
     <div class="float-right d-none d-sm-block">
       <b>Levano</b> 
     </div>
-    <strong>Website bán giày dép Levano</strong>
+    <strong>Website bán hoa quả Fruit Shop</strong>
   </footer>
 
   <!-- Control Sidebar -->

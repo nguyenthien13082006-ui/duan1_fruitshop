@@ -36,6 +36,9 @@
                         <form action="<?= BASE_URL_ADMIN . '?act=them-san-pham' ?>" method="POST" enctype="multipart/form-data">
                             <div class="row card-body">
                                 <div class="form-group col-12">
+                                    <small class="text-muted"><i class="fas fa-info-circle"></i> Mã sản phẩm sẽ được hệ thống tự động sinh (dạng SP0001, SP0002...) sau khi lưu.</small>
+                                </div>
+                                <div class="form-group col-12">
                                     <label>Tên sản phẩm</label>
                                     <input type="text" class="form-control" name="ten_san_pham" placeholder="Nhập tên sản phẩm">
                                     <?php if (isset($_SESSION['error']['ten_san_pham'])) { ?>
@@ -102,6 +105,34 @@
                                         <p class="text-danger"><?= $_SESSION['error']['danh_muc_id'] ?></p>
                                     <?php } ?>
 
+                                </div>
+
+
+                                <div class="form-group col-12">
+                                    <label>Nhà cung cấp</label>
+                                    <select class="form-control" name="nha_cung_cap_id" aria-label="Default select example">
+                                        <option value="" selected>-- Chọn nhà cung cấp (không bắt buộc) --</option>
+
+                                        <?php foreach ($listNhaCungCap as $nhaCungCap): ?>
+                                            <option value="<?= $nhaCungCap['id'] ?>"><?= $nhaCungCap['ten_nha_cung_cap'] ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Xuất xứ</label>
+                                    <input type="text" class="form-control" name="xuat_xu" placeholder="Ví dụ: Hàn Quốc, Đà Lạt - Việt Nam,...">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>Đơn vị tính</label>
+                                    <select class="form-control" name="don_vi_tinh">
+                                        <option value="kg">kg</option>
+                                        <option value="hộp">hộp</option>
+                                        <option value="túi">túi</option>
+                                        <option value="quả">quả</option>
+                                        <option value="thùng">thùng</option>
+                                    </select>
                                 </div>
 
 

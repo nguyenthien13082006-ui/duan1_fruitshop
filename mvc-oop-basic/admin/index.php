@@ -7,6 +7,7 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/AdminDanhMucController.php';
+require_once './controllers/AdminNhaCungCapController.php';
 require_once './controllers/AdminSanPhamController.php';
 require_once './controllers/AdminDonHangController.php';
 require_once './controllers/AdminBaoCaoThongkeController.php';
@@ -16,6 +17,7 @@ require_once './controllers/AdminTaiKhoanController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
+require_once './models/AdminNhaCungCap.php';
 require_once './models/AdminSanPham.php';
 require_once './models/AdminDonHang.php';
 require_once './models/AdminTaiKhoan.php';
@@ -46,6 +48,12 @@ match ($act) {
     'form-sua-danh-muc' => (new AdminDanhMucController())->formEditDanhMuc(),
     'sua-danh-muc' => (new AdminDanhMucController())->postEditDanhMuc(),
     'xoa-danh-muc' => (new AdminDanhMucController())->deleteDanhMuc(),
+    'nha-cung-cap' => (new AdminNhaCungCapController())->danhSachNhaCungCap(),
+    'form-them-nha-cung-cap' => (new AdminNhaCungCapController())->formAddNhaCungCap(),
+    'them-nha-cung-cap' => (new AdminNhaCungCapController())->postAddNhaCungCap(),
+    'form-sua-nha-cung-cap' => (new AdminNhaCungCapController())->formEditNhaCungCap(),
+    'sua-nha-cung-cap' => (new AdminNhaCungCapController())->postEditNhaCungCap(),
+    'xoa-nha-cung-cap' => (new AdminNhaCungCapController())->deleteNhaCungCap(),
 
 
     // route sản phẩm
@@ -57,6 +65,7 @@ match ($act) {
     'sua-album-anh-san-pham' => (new AdminSanPhamController())->postEditAnhSanPham(),
     'xoa-san-pham' => (new AdminSanPhamController())->deleteSanPham(),
     'chi-tiet-san-pham' => (new AdminSanPhamController())->detailSanPham(),
+    'cap-nhat-so-luong' => (new AdminSanPhamController())->postUpdateSoLuong(),
 
 
     // route quản lý đơn hàng

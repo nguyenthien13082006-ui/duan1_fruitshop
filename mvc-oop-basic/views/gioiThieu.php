@@ -116,7 +116,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-5">
                     <div class="about-thumb">
-                        <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=800&q=80" alt="about thumb">
+                        <img src="assets/img/gioithieu/about-fruit-shop.png" alt="Fruit Shop - hoa quả tươi ngon">
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -150,7 +150,7 @@
                     <div class="single-choose-item text-center mb-30">
                         <i class="fa fa-globe"></i>
                         <h4>Chất lượng cao</h4>
-                        <p>Sản phẩm được kiểm định nghiêm ngặt, sử dụng chất liệu cao cấp, bền đẹp theo thời gian.</p>
+                        <p>Hoa quả được kiểm định nghiêm ngặt, chọn lọc từ nguồn uy tín, tươi ngon và an toàn.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
@@ -164,7 +164,7 @@
                     <div class="single-choose-item text-center mb-30">
                         <i class="fa fa-comments"></i>
                         <h4>Hỗ trợ tận tâm</h4>
-                        <p>Tư vấn size và phối đồ nhanh chóng, hỗ trợ trước & sau mua hàng.</p>
+                        <p>Tư vấn chọn hoa quả theo nhu cầu nhanh chóng, hỗ trợ trước & sau mua hàng.</p>
                     </div>
                 </div>
             </div>
@@ -181,24 +181,24 @@
             </div>
             <div class="gallery-grid">
                 <div class="gallery-item large">
-                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80" alt="Sneaker">
-                    <div class="overlay"><span>Sneaker</span></div>
+                    <img src="assets/img/gioithieu/gallery-dia-trai-cay.png" alt="Đĩa trái cây nghệ thuật">
+                    <div class="overlay"><span>Đĩa Trái Cây Nghệ Thuật</span></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80" alt="Giày thể thao">
-                    <div class="overlay"><span>Thể Thao</span></div>
+                    <img src="assets/img/gioithieu/gallery-xoai-cat.jpg" alt="Xoài cát">
+                    <div class="overlay"><span>Xoài Cát</span></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="Giày thời trang">
-                    <div class="overlay"><span>Thời Trang</span></div>
+                    <img src="assets/img/gioithieu/gallery-tao-do.jpg" alt="Táo đỏ cao cấp">
+                    <div class="overlay"><span>Táo Đỏ Cao Cấp</span></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80" alt="Giày chạy bộ">
-                    <div class="overlay"><span>Chạy Bộ</span></div>
+                    <img src="assets/img/gioithieu/gallery-tao-envy.jpg" alt="Táo Envy">
+                    <div class="overlay"><span>Táo Envy</span></div>
                 </div>
                 <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=600&q=80" alt="Giày công sở">
-                    <div class="overlay"><span>Công Sở</span></div>
+                    <img src="assets/img/gioithieu/gallery-set-trai-cay.png" alt="Set trái cây tiệc">
+                    <div class="overlay"><span>Set Trái Cây Tiệc</span></div>
                 </div>
             </div>
         </div>
