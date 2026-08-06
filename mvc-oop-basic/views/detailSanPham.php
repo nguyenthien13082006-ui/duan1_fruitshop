@@ -42,11 +42,29 @@
                     </p>
                 </section>
 
+                <?php
+                $ngayNhapDate = !empty($sanPham['ngay_nhap']) ? new DateTime($sanPham['ngay_nhap']) : new DateTime('today');
+                $ngayHetHanDuKien = (clone $ngayNhapDate)->modify('+10 day');
+                $today = new DateTime('today');
+                $soNgayConLai = (int) $today->diff($ngayHetHanDuKien)->days;
+
+                if ($soNgayConLai >= 7) {
+                    $trangThai = 'Tồn kho';
+                } elseif ($soNgayConLai >= 3) {
+                    $trangThai = 'Còn tươi';
+                } else {
+                    $trangThai = 'Mới nhập';
+                }
+                ?>
                 <section class="mb-4">
                     <h3>Đặc điểm</h3>
                     <ul>
                         <li><strong>Xuất xứ:</strong> <?= htmlspecialchars($sanPham['xuat_xu'] ?? 'Chưa cập nhật') ?></li>
                         <li><strong>Số lượng còn:</strong> <?= (int)($sanPham['so_luong'] ?? 0) ?> <?= htmlspecialchars($sanPham['don_vi_tinh'] ?? 'kg') ?></li>
+                        <li><strong>Ngày nhập:</strong> <?= htmlspecialchars($sanPham['ngay_nhap'] ?? 'Chưa cập nhật') ?></li>
+                        <li><strong>Ngày hết hạn dự kiến:</strong> <?= $ngayHetHanDuKien->format('d/m/Y') ?></li>
+                        <li><strong>Số ngày còn lại:</strong> <?= $soNgayConLai ?> ngày</li>
+                        <li><strong>Trạng thái:</strong> <?= $trangThai ?></li>
                         <li><strong>Hình thức:</strong> Trái tươi, chín tự nhiên, kích thước và màu sắc phụ thuộc theo đợt thu hoạch</li>
                         <li><strong>Hương vị:</strong> Vị ngọt thanh, thơm đặc trưng phù hợp ăn tươi hoặc chế biến</li>
                         <li><strong>Lưu ý:</strong> Sản phẩm dễ hư nếu để nơi nóng ẩm — nên bảo quản lạnh khi có thể</li>
@@ -121,6 +139,26 @@
                     <?php endforeach; ?>
 
                     <?php if (isset($_SESSION['user_client'])): ?>
+                        <form action="<?= BASE_URL . '?act=post-danh-gia' ?>" method="POST" class="mt-3 border rounded p-3">
+                            <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                            <div class="mb-2">
+                                <label>Đánh giá sao</label>
+                                <select name="so_sao" class="form-control" required>
+                                    <option value="">-- Chọn số sao --</option>
+                                    <option value="5">5 sao - Rất hài lòng</option>
+                                    <option value="4">4 sao - Hài lòng</option>
+                                    <option value="3">3 sao - Bình thường</option>
+                                    <option value="2">2 sao - Không hài lòng</option>
+                                    <option value="1">1 sao - Rất không hài lòng</option>
+                                </select>
+                            </div>
+                            <div class="mb-2">
+                                <label>Nhận xét (tùy chọn)</label>
+                                <textarea name="noi_dung" class="form-control" rows="3" placeholder="Bạn thích sản phẩm này vì sao?"></textarea>
+                            </div>
+                            <button class="btn btn-warning">Gửi đánh giá</button>
+                        </form>
+
                         <form action="<?= BASE_URL . '?act=post-binh-luan' ?>" method="POST" class="mt-3">
                             <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
                             <div class="mb-2">
@@ -130,7 +168,7 @@
                             <button class="btn btn-primary">Gửi bình luận</button>
                         </form>
                     <?php else: ?>
-                        <p class="text-muted">Vui lòng <a href="<?= BASE_URL . '?act=login' ?>">đăng nhập</a> để bình luận.</p>
+                        <p class="text-muted">Vui lòng <a href="<?= BASE_URL . '?act=login' ?>">đăng nhập</a> để bình luận và đánh giá.</p>
                     <?php endif; ?>
                 </section>
 
@@ -167,6 +205,9 @@
                         <li><strong>Danh mục:</strong> <?= htmlspecialchars($sanPham['ten_danh_muc']) ?></li>
                         <li><strong>Nhà cung cấp:</strong> <?= htmlspecialchars($sanPham['ten_nha_cung_cap'] ?? 'Chưa cập nhật') ?></li>
                         <li><strong>Ngày nhập:</strong> <?= htmlspecialchars($sanPham['ngay_nhap']) ?></li>
+                        <li><strong>Ngày hết hạn dự kiến:</strong> <?= $ngayHetHanDuKien->format('d/m/Y') ?></li>
+                        <li><strong>Còn lại:</strong> <?= $soNgayConLai ?> ngày</li>
+                        <li><strong>Trạng thái:</strong> <span class="text-success"><strong><?= $trangThai ?></strong></span></li>
                     </ul>
                 </div>
             </aside>
@@ -221,7 +262,7 @@
                                     </div>
 
                                     <div class="cart-hover">
-                                        <button class="btn btn-cart">Xem chi tiết</button>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>" class="btn btn-cart">Xem chi tiết</a>
                                     </div>
                                 </figure>
                                 <div class="product-caption text-center">

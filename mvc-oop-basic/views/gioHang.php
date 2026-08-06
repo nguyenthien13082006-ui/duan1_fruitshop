@@ -38,6 +38,7 @@ if (!isset($chiTietGioHang) || !is_array($chiTietGioHang)) {
                                         <th class="pro-title">Tên sản phẩm</th>
                                         <th class="pro-price">Giá</th>
                                         <th class="pro-quantity">Số lượng</th>
+                                        <th class="pro-quantity">Đơn vị</th>
                                         <th class="pro-subtotal">Tổng tiền</th>
                                         <th class="pro-remove">Thao tác</th>
                                     </tr>
@@ -77,6 +78,7 @@ if (!isset($chiTietGioHang) || !is_array($chiTietGioHang)) {
                                                     </form>
                                                 </div>
                                             </td>
+                                            <td class="pro-quantity"><?= htmlspecialchars($sanPham['don_vi_tinh'] ?? 'kg') ?></td>
                                             <td class="pro-subtotal"><?= formatPrice($tongtien) . 'đ' ?></td>
                                             <td class="pro-remove">
                                                 <a href="<?= BASE_URL ?>?act=xoa-gio-hang&id_san_pham=<?= $sanPham['san_pham_id'] ?>"

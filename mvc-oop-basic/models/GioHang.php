@@ -30,7 +30,8 @@ class GioHang
                san_phams.ten_san_pham, 
                san_phams.hinh_anh, 
                san_phams.gia_san_pham, 
-               san_phams.gia_khuyen_mai
+               san_phams.gia_khuyen_mai,
+               san_phams.don_vi_tinh
         FROM chi_tiet_gio_hangs
         INNER JOIN san_phams 
             ON chi_tiet_gio_hangs.san_pham_id = san_phams.id 
