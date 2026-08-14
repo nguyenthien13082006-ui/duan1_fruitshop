@@ -13,6 +13,7 @@ require_once './models/SanPham.php';
 require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
 require_once './models/DonHang.php';
+require_once './models/LienHe.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -51,6 +52,7 @@ match ($act) {
     'thong-tin-ca-nhan' => (new HomeController())->thongTinCaNhan(),
     'update-profile' => (new HomeController())->updateProfile(),
     'lien_he' => (new HomeController())->lienHe(),
+    'post-lien-he' => (new HomeController())->postLienHe(),
     'dashboard' => (new HomeController())->dashboard(),
 
     'post-danh-gia' => (new HomeController())->postDanhGia(),

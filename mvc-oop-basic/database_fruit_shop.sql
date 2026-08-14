@@ -190,6 +190,18 @@ CREATE TABLE IF NOT EXISTS danh_gias (
   FOREIGN KEY (tai_khoan_id) REFERENCES tai_khoans(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE IF NOT EXISTS lien_he (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ho_ten VARCHAR(150) NOT NULL,
+  so_dien_thoai VARCHAR(50) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  tieu_de VARCHAR(255) DEFAULT NULL,
+  noi_dung TEXT NOT NULL,
+  phan_hoi TEXT DEFAULT NULL,
+  trang_thai VARCHAR(100) DEFAULT 'Chưa xử lý',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO chuc_vu (id, ten_chuc_vu) VALUES
 (1, 'Quản trị'),
 (2, 'Khách hàng')

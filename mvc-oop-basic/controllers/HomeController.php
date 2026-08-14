@@ -5,6 +5,7 @@ class HomeController
 {
     public $modelSanPham;
     public $modelTaiKhoan;
+    public $modelLienHe;
 
     public $modelGioHang;
     public $modelDonHang;
@@ -13,6 +14,7 @@ class HomeController
     {
         $this->modelSanPham = new SanPham();
         $this->modelTaiKhoan = new TaiKhoan();
+        $this->modelLienHe = new LienHe();
         $this->modelGioHang = new GioHang();
         $this->modelDonHang = new DonHang();
     }
@@ -466,6 +468,59 @@ class HomeController
     public function lienHe()
     {
         require_once './views/lienHe.php';
+    }
+
+    public function postLienHe()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('HTTP/1.1 405 Method Not Allowed');
+            echo 'Phương thức không hợp lệ.';
+            exit();
+        }
+
+        $first_name = trim($_POST['first_name'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $email_address = trim($_POST['email_address'] ?? '');
+        $contact_subject = trim($_POST['contact_subject'] ?? '');
+        $message = trim($_POST['message'] ?? '');
+
+        if ($first_name === '' || $phone === '' || $email_address === '' || $message === '') {
+            header('HTTP/1.1 400 Bad Request');
+            echo 'Vui lòng nhập đầy đủ tên, email, điện thoại và nội dung.';
+            exit();
+        }
+
+        if (!filter_var($email_address, FILTER_VALIDATE_EMAIL)) {
+            header('HTTP/1.1 400 Bad Request');
+            echo 'Email không hợp lệ.';
+            exit();
+        }
+
+        $to = 'support@fruitshop.com';
+        $subject = $contact_subject !== '' ? $contact_subject : 'Liên hệ từ khách hàng';
+        $body = "Tên: $first_name\nĐiện thoại: $phone\nEmail: $email_address\nTiêu đề: $contact_subject\nNội dung:\n$message\n";
+        $headers = "From: $first_name <$email_address>\r\n";
+        $headers .= "Reply-To: $email_address\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+        if (!$this->modelLienHe->insertLienHe($first_name, $phone, $email_address, $contact_subject, $message)) {
+            $logFolder = PATH_ROOT . 'storage/';
+            if (!is_dir($logFolder)) {
+                mkdir($logFolder, 0755, true);
+            }
+            $logPath = $logFolder . 'contact-log.txt';
+            $logData = '[' . date('Y-m-d H:i:s') . '] name=' . $first_name . ' email=' . $email_address . ' phone=' . $phone . ' subject=' . $subject . ' message=' . str_replace(["\r", "\n"], [' ', ' '], $message) . "\n";
+            file_put_contents($logPath, $logData, FILE_APPEND | LOCK_EX);
+        }
+
+        $sent = false;
+        if (function_exists('mail')) {
+            $sent = mail($to, $subject, $body, $headers);
+        }
+
+        header('Content-Type: text/plain; charset=UTF-8');
+        echo 'Cảm ơn bạn! Thông tin liên hệ đã được gửi thành công.';
+        exit();
     }
 
     private function getNewsArticles()

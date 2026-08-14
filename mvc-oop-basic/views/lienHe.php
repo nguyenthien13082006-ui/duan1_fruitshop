@@ -27,7 +27,7 @@
                                 <div class="col-lg-6">
                                     <div class="contact-message">
                                         <h4 class="contact-title">Gửi câu hỏi cho chúng tôi</h4>
-                                        <form id="contact-form" action="https://whizthemes.com/mail-php/genger/mail.php" method="post" class="contact-form">
+                                        <form id="contact-form" action="<?= BASE_URL ?>?act=post-lien-he" method="post" class="contact-form">
                                             <div class="row">
                                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                                     <input name="first_name" placeholder="Name *" type="text" required>
@@ -46,7 +46,7 @@
                                                         <textarea placeholder="Message *" name="message" class="form-control2" required=""></textarea>
                                                     </div>
                                                     <div class="contact-btn">
-                                                        <button class="btn btn-sqr" type="submit">Send Message</button>
+                                                        <button class="btn btn-sqr" type="submit">Gửi   </button>
                                                     </div>
                                                 </div>
                                                 <div class="col-12 d-flex justify-content-center">
