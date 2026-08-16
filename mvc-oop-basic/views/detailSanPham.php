@@ -31,7 +31,7 @@
 
             <div class="col-lg-8">
                 <div class="mb-4 text-center">
-                    <img src="<?= BASE_URL . ($listAnhSanPham[0]['link_hinh_anh'] ?? $sanPham['hinh_anh']) ?>" alt="<?= htmlspecialchars($sanPham['ten_san_pham']) ?>" style="max-width:100%; height:auto; display:inline-block; border-radius:4px;">
+                    <img src="<?= productImageUrl($listAnhSanPham[0]['link_hinh_anh'] ?? $sanPham['hinh_anh']) ?>" alt="<?= htmlspecialchars($sanPham['ten_san_pham']) ?>" style="max-width:100%; height:auto; display:inline-block; border-radius:4px;">
                 </div>
 
                 <section class="mb-4">

@@ -23,6 +23,19 @@ function connectDB()
     }
 }
 
+function productImageUrl($imagePath)
+{
+    if (empty($imagePath)) {
+        return '';
+    }
+
+    if (preg_match('/^(https?:\/\/|\/\/|data:)/i', $imagePath)) {
+        return $imagePath;
+    }
+
+    return BASE_URL . ltrim($imagePath, '/');
+}
+
 
 // Thêm file 
 function uploadFile($file, $folderUpload)

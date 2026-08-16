@@ -1,29 +1,39 @@
 <?php require_once 'layout/header.php'; ?>
 <?php require_once 'layout/menu.php'; ?>
-<main>
+<main class="news-page">
     <div class="container section-padding">
-        <div class="row">
+        <div class="row align-items-center mb-4">
             <div class="col-12">
-                <h1 class="mb-4">Tin tức & Cẩm nang</h1>
+                <div class="news-page__header">
+                    <span class="news-page__badge">Fruit Shop</span>
+                    <h1>Tin tức & Cẩm nang</h1>
+                    <p>Cập nhật kiến thức, mẹo chọn mua và cách bảo quản trái cây tươi ngon mỗi ngày.</p>
+                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-8">
                 <?php foreach ($articles as $article): ?>
-                    <article class="mb-4 card p-3">
-                        <div class="row g-0">
+                    <article class="news-card">
+                        <div class="row g-0 align-items-center">
                             <div class="col-md-4">
-                                <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>" class="d-block">
-                                    <img src="<?= BASE_URL . $article['image'] ?>" alt="<?= htmlspecialchars($article['title']) ?>" style="width:100%;height:100%;object-fit:cover;">
+                                <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>" class="news-card__image-wrap">
+                                    <img src="<?= BASE_URL . $article['image'] ?>" alt="<?= htmlspecialchars($article['title']) ?>">
                                 </a>
                             </div>
                             <div class="col-md-8">
-                                <div class="card-body">
-                                    <h3 class="card-title"><a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>"><?= htmlspecialchars($article['title']) ?></a></h3>
-                                    <div class="text-muted mb-2">Ngày: <?= htmlspecialchars($article['date']) ?></div>
-                                    <p class="card-text"><?= htmlspecialchars($article['excerpt']) ?></p>
-                                    <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>" class="btn btn-primary">Xem thêm</a>
+                                <div class="news-card__body">
+                                    <span class="news-card__tag">Mẹo chọn mua</span>
+                                    <h3 class="news-card__title">
+                                        <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>"><?= htmlspecialchars($article['title']) ?></a>
+                                    </h3>
+                                    <div class="news-card__meta">
+                                        <span><i class="fa fa-calendar"></i> <?= htmlspecialchars($article['date']) ?></span>
+                                        <span><i class="fa fa-user"></i> Fruit Shop</span>
+                                    </div>
+                                    <p class="news-card__excerpt"><?= htmlspecialchars($article['excerpt']) ?></p>
+                                    <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($article['slug']) ?>" class="news-card__btn">Xem thêm</a>
                                 </div>
                             </div>
                         </div>
@@ -31,7 +41,7 @@
                 <?php endforeach; ?>
 
                 <?php if (isset($totalPages) && $totalPages > 1): ?>
-                    <nav aria-label="Page navigation" class="mt-4">
+                    <nav aria-label="Page navigation" class="news-pagination mt-4">
                         <ul class="pagination">
                             <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
                                 <a class="page-link" href="<?= BASE_URL . '?act=tin-tuc&page=' . max(1, $page - 1) ?>">Previous</a>
@@ -50,24 +60,26 @@
             </div>
 
             <aside class="col-lg-4">
-                <div class="card p-3 mb-3">
+                <div class="news-sidebar-card">
                     <h5>Bài viết nổi bật</h5>
-                    <p class="text-muted" style="font-size:14px; margin-bottom:12px;">Các nội dung được chọn lọc, hữu ích cho cách bảo quản và chọn mua trái cây.</p>
-                    <ul class="list-unstyled mb-0">
+                    <p>Các nội dung được chọn lọc, hữu ích cho cách bảo quản và chọn mua trái cây.</p>
+                    <ul>
                         <?php foreach (array_slice($articles, 0, 3) as $a): ?>
-                            <li><a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($a['slug']) ?>"><?= htmlspecialchars($a['title']) ?></a></li>
+                            <li>
+                                <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($a['slug']) ?>"><?= htmlspecialchars($a['title']) ?></a>
+                            </li>
                         <?php endforeach; ?>
                     </ul>
                 </div>
 
-                <div class="card p-3">
+                <div class="news-sidebar-card">
                     <h5>Bài viết mới nhất</h5>
-                    <p class="text-muted" style="font-size:14px; margin-bottom:12px;">Các tin vừa đăng, cập nhật hàng đầu cho khách hàng.</p>
-                    <ul class="list-unstyled mb-0">
+                    <p>Các tin vừa đăng, cập nhật hàng đầu cho khách hàng.</p>
+                    <ul>
                         <?php foreach (array_slice($articles, 0, 3) as $a): ?>
-                            <li class="mb-2">
+                            <li>
                                 <a href="<?= BASE_URL . '?act=tin-tuc-chi-tiet&slug=' . urlencode($a['slug']) ?>"><?= htmlspecialchars($a['title']) ?></a>
-                                <div class="text-muted" style="font-size:12px"><?= htmlspecialchars($a['date']) ?></div>
+                                <span><?= htmlspecialchars($a['date']) ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>

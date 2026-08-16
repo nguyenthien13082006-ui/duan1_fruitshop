@@ -32,6 +32,7 @@
 
                                         <li><a href="<?= BASE_URL . '?act=products' ?>">Sản phẩm</a>
                                         </li>
+                                        <li><a href="<?= BASE_URL . '?act=tin-tuc' ?>">Tin tức</a></li>
                                         <li><a href="<?= BASE_URL . '?act=gioi-thieu' ?>">Giới thiệu</a></li>
                                         <li><a href="<?= BASE_URL . '?act=lien_he' ?>">Liên hệ</a></li>
                                     </ul>
