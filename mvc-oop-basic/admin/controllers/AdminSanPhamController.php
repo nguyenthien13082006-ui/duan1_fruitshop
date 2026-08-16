@@ -362,6 +362,7 @@ class AdminSanPhamController
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
 
         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
+        $listBinhLuan = $this->modelSanPham->getBinhLuanFromSanPham($id);
 
         if ($sanPham) {
             //Nếu tồn tại thì trả về form sửa sản phẩm
@@ -372,6 +373,25 @@ class AdminSanPhamController
             exit();
         }
     }
+
+    public function deleteBinhLuan()
+    {
+        $id_binh_luan = $_POST['id_binh_luan'] ?? null;
+        $id_san_pham = $_POST['id_san_pham'] ?? null;
+
+        if ($id_binh_luan) {
+            $this->modelSanPham->destroyBinhLuan($id_binh_luan);
+        }
+
+        if ($id_san_pham) {
+            header('location: ' . BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $id_san_pham);
+            exit();
+        }
+
+        header('location: ' . BASE_URL_ADMIN . '?act=san-pham');
+        exit();
+    }
+
     public function updateTrangThaiBinhLuan()
     {
         $id_binh_luan = $_POST['id_binh_luan'];

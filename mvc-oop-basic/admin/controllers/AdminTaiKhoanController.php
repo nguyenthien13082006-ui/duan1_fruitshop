@@ -30,8 +30,12 @@ class AdminTaiKhoanController
         //Kiểm xem dữ liệu có được submit lên hay không
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //Lấy ra dữ liệu 
-            $ho_ten = $_POST['ho_ten'];
-            $email = $_POST['email'];
+            $ho_ten = $_POST['ho_ten'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
+            $mat_khau = $_POST['mat_khau'] ?? '';
+            $trang_thai = $_POST['trang_thai'] ?? 1;
+
             //Tạo 1 mảng trống để chứa dữ liệu
             $errors = [];
             if (empty($ho_ten)) {
@@ -44,18 +48,31 @@ class AdminTaiKhoanController
                 $errors['email'] = 'Email này đã được sử dụng, vui lòng chọn email khác';
             }
 
+            if (empty($mat_khau)) {
+                $errors['mat_khau'] = 'Mật khẩu không được để trống';
+            } elseif (strlen($mat_khau) < 6) {
+                $errors['mat_khau'] = 'Mật khẩu phải có ít nhất 6 ký tự';
+            }
+
+            if (empty($trang_thai)) {
+                $errors['trang_thai'] = 'Vui lòng chọn trạng thái';
+            }
+
             $_SESSION['error'] = $errors;
+            $_SESSION['old_data'] = [
+                'ho_ten' => $ho_ten,
+                'email' => $email,
+                'so_dien_thoai' => $so_dien_thoai,
+                'trang_thai' => $trang_thai,
+            ];
             //Nếu không có lỗi thì thực hiện thêm mới
             if (empty($errors)) {
-                //Nếu có lỗi thì tiến hành thêm danh mục
-
-                //đặt password mặc định
-                $password = password_hash('123456', PASSWORD_BCRYPT);
-
+                $password = password_hash($mat_khau, PASSWORD_BCRYPT);
                 $chuc_vu_id = 1;
 
-                $this->modelTaiKhoan->insertTaiKhoan($ho_ten, $email, $password, $chuc_vu_id);
+                $this->modelTaiKhoan->insertTaiKhoan($ho_ten, $email, $password, $chuc_vu_id, $so_dien_thoai, $trang_thai);
 
+                unset($_SESSION['error'], $_SESSION['old_data']);
                 header('location: ' . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
                 exit();
             } else {
@@ -88,6 +105,7 @@ class AdminTaiKhoanController
             $ho_ten = $_POST['ho_ten'] ?? '';
             $email = $_POST['email'] ?? '';
             $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
+            $mat_khau = $_POST['mat_khau'] ?? '';
             $trang_thai = $_POST['trang_thai'] ?? '';
 
 
@@ -100,6 +118,9 @@ class AdminTaiKhoanController
             }
             if (empty($email)) {
                 $errors['email'] = 'Email người dùng không được để trống';
+            }
+            if (!empty($mat_khau) && strlen($mat_khau) < 6) {
+                $errors['mat_khau'] = 'Mật khẩu mới phải có ít nhất 6 ký tự';
             }
             if (empty($trang_thai)) {
                 $errors['trang_thai'] = 'Vui lòng chọn trạng thái';
@@ -114,7 +135,8 @@ class AdminTaiKhoanController
                     $ho_ten,
                     $email,
                     $so_dien_thoai,
-                    $trang_thai
+                    $trang_thai,
+                    $mat_khau
                 );
                 header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
                 exit();

@@ -7,6 +7,21 @@ class AdminSanPham
     public function __construct()
     {
         $this->conn = connectDB();
+        $this->ensureBinhLuanSchema();
+    }
+
+    public function ensureBinhLuanSchema()
+    {
+        try {
+            $stmt = $this->conn->query("SHOW COLUMNS FROM binh_luans");
+            $columns = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (!in_array('trang_thai', $columns, true)) {
+                $this->conn->exec('ALTER TABLE binh_luans ADD COLUMN trang_thai TINYINT(1) NOT NULL DEFAULT 1 AFTER ngay_dang');
+            }
+        } catch (Exception $e) {
+            echo 'Lỗi schema bình luận: ' . $e->getMessage();
+        }
     }
 
     public function getAllSanPham()
@@ -295,6 +310,23 @@ class AdminSanPham
             echo "Lỗi: " . $e->getMessage();
         }
     }
+
+    public function destroyBinhLuan($id)
+    {
+        try {
+            $sql = 'DELETE FROM binh_luans WHERE id=:id';
+
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->execute([
+                ':id' => $id,
+            ]);
+
+            return true;
+        } catch (Exception $e) {
+            echo "Lỗi: " . $e->getMessage();
+        }
+    }
     public function getBinhLuanFromKhachHang($id)
     {
         try {
@@ -359,7 +391,7 @@ class AdminSanPham
             FROM binh_luans
             LEFT JOIN tai_khoans ON binh_luans.tai_khoan_id = tai_khoans.id
             WHERE binh_luans.san_pham_id = :id
-            ';
+            ORDER BY binh_luans.id DESC';
 
             $stmt = $this->conn->prepare($sql);
 

@@ -140,30 +140,37 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Nguyễn Duy Mạnh</td>
-                      <td>Sản phẩm hơi cũ</td>
-                      <td>20/04/2024</td>
-                      <td>
-                        <div class="btn-group">
-                          <a href="#"><button class="btn btn-warning">Ẩn</button></a>
-                          <a href="#"><button class="btn btn-danger">Xóa</button></a>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Lê Đức Hòa</td>
-                      <td>Sản phẩm hơi xấu</td>
-                      <td>20/04/2023</td>
-                      <td>
-                        <div class="btn-group">
-                          <a href="#"><button class="btn btn-warning">Ẩn</button></a>
-                          <a href="#"><button class="btn btn-danger">Xóa</button></a>
-                        </div>
-                      </td>
-                    </tr>
+                    <?php if (!empty($listBinhLuan)): ?>
+                      <?php foreach ($listBinhLuan as $key => $binhLuan): ?>
+                        <tr>
+                          <td><?= $key + 1 ?></td>
+                          <td><?= htmlspecialchars($binhLuan['ho_ten'] ?? 'Khách hàng') ?></td>
+                          <td><?= nl2br(htmlspecialchars($binhLuan['noi_dung'])) ?></td>
+                          <td><?= date('d/m/Y', strtotime($binhLuan['ngay_dang'])) ?></td>
+                          <td>
+                            <div class="btn-group">
+                              <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>" method="POST" style="display:inline;">
+                                <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
+                                <input type="hidden" name="name_view" value="detail_san_pham">
+                                <input type="hidden" name="id_san_pham" value="<?= $sanPham['id'] ?>">
+                                <button type="submit" onclick="return confirm('Bạn có muốn <?= $binhLuan['trang_thai'] == 1 ? 'ẩn' : 'hiển thị lại' ?> bình luận này không?')" class="btn btn-warning">
+                                  <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Hiện' ?>
+                                </button>
+                              </form>
+                              <form action="<?= BASE_URL_ADMIN . '?act=xoa-binh-luan' ?>" method="POST" style="display:inline;">
+                                <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
+                                <input type="hidden" name="id_san_pham" value="<?= $sanPham['id'] ?>">
+                                <button type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa bình luận này không?')" class="btn btn-danger">Xóa</button>
+                              </form>
+                            </div>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    <?php else: ?>
+                      <tr>
+                        <td colspan="5" class="text-center">Chưa có bình luận nào cho sản phẩm này.</td>
+                      </tr>
+                    <?php endif; ?>
                   </tbody>
                 </table>
           </div>

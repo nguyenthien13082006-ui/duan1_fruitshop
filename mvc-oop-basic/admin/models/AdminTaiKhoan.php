@@ -23,7 +23,7 @@ class AdminTaiKhoan
         }
     }
 
-     public function insertTaiKhoan($ho_ten, $email, $password, $chuc_vu_id){
+     public function insertTaiKhoan($ho_ten, $email, $password, $chuc_vu_id, $so_dien_thoai = '', $trang_thai = 1){
     try{
         $sql = 'INSERT INTO tai_khoans 
         (ho_ten, email, mat_khau, chuc_vu_id, so_dien_thoai, dia_chi, ngay_sinh, gioi_tinh, trang_thai) 
@@ -34,16 +34,16 @@ class AdminTaiKhoan
         $stmt->execute([
             ':ho_ten' => $ho_ten,
             ':email' => $email,
-            ':mat_khau' => $password, // 👈 đổi tên cho đúng với DB
+            ':mat_khau' => $password,
             ':chuc_vu_id' => $chuc_vu_id,
-            ':so_dien_thoai' => '',
+            ':so_dien_thoai' => $so_dien_thoai,
             ':dia_chi' => '',
             ':ngay_sinh' => null,
             ':gioi_tinh' => 1,
-            ':trang_thai' => 1
+            ':trang_thai' => $trang_thai
         ]);
 
-        return $this->conn->lastInsertId(); // 👈 trả về ID (xịn hơn true)
+        return $this->conn->lastInsertId();
 
     }catch(PDOException $e){
         die("Lỗi SQL: " . $e->getMessage());
@@ -66,29 +66,34 @@ class AdminTaiKhoan
         }
     }
 
-    public function updateTaiKhoan($id, $ho_ten, $email, $so_dien_thoai, $trang_thai)
+    public function updateTaiKhoan($id, $ho_ten, $email, $so_dien_thoai, $trang_thai, $mat_khau = null)
     {
         try {
-            // var_dump($id);die;
             $sql = 'UPDATE tai_khoans
                     SET 
                         ho_ten = :ho_ten,
                         email = :email,
                         so_dien_thoai = :so_dien_thoai,
-                        trang_thai = :trang_thai
-                    WHERE id = :id';
+                        trang_thai = :trang_thai';
 
-            $stmt = $this->conn->prepare($sql);
-
-            // var_dump($stmt);die;
-            $stmt->execute([
+            $params = [
                 ':ho_ten' => $ho_ten,
                 ':email' => $email,
                 ':so_dien_thoai' => $so_dien_thoai,
                 ':trang_thai' => $trang_thai,
                 ':id' => $id
-            ]);
+            ];
 
+            if (!empty($mat_khau)) {
+                $sql .= ', mat_khau = :mat_khau';
+                $params[':mat_khau'] = password_hash($mat_khau, PASSWORD_BCRYPT);
+            }
+
+            $sql .= ' WHERE id = :id';
+
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->execute($params);
 
             return true;
         } catch (Exception $e) {

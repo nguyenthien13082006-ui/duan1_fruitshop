@@ -55,8 +55,13 @@
                                 <div class="form-group">
                                     <label>Số điện thoại</label>
                                     <input type="text" class="form-control" name="so_dien_thoai" value="<?= $quanTri['so_dien_thoai'] ?>" placeholder="Nhập số điện thoại">
-                                    <?php if (isset($_SESSION['error']['email'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['error']['email'] ?></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Mật khẩu mới</label>
+                                    <input type="password" class="form-control" name="mat_khau" placeholder="Nhập mật khẩu mới (để trống nếu không đổi)">
+                                    <?php if (isset($_SESSION['error']['mat_khau'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['error']['mat_khau'] ?></p>
                                     <?php } ?>
                                 </div>
 
@@ -64,8 +69,11 @@
                                     <label for="inputStatus">Trạng thái tài khoản</label>
                                     <select id="inputStatus" name="trang_thai" class="form-control custom-select">
                                         <option <?= $quanTri['trang_thai'] == 1 ? 'selected' : '' ?> value="1">Active</option>
-                                        <option <?= $quanTri['trang_thai'] !== 1 ? 'selected' : '' ?> value="2">Inactive</option>
+                                        <option <?= $quanTri['trang_thai'] != 1 ? 'selected' : '' ?> value="2">Inactive</option>
                                     </select>
+                                    <?php if (isset($_SESSION['error']['trang_thai'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['error']['trang_thai'] ?></p>
+                                    <?php } ?>
                                 </div>
 
                                 <div class="card-footer">

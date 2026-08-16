@@ -92,6 +92,7 @@ match ($act) {
 
     //route bình luận
     'update-trang-thai-binh-luan' => (new AdminSanPhamController())->updateTrangThaiBinhLuan(),
+    'xoa-binh-luan' => (new AdminSanPhamController())->deleteBinhLuan(),
 
     // route reset password tài khoản
     'reset-password' => (new AdminTaiKhoanController())->resetPassword(),
